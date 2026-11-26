@@ -15,3 +15,6 @@ def fetch_ingredients():
     rows = cur.fetchall()
     return rows
 
+def update_ingredient(quantity, name):
+    cur.execute("UPDATE ingredients SET quantity = quantity - ? WHERE name = ?", (quantity, name))
+    con.commit()
