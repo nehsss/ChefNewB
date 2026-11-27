@@ -14,25 +14,29 @@ def add_ingredient():
             break
         except ValueError:
             print("Invalid input. Please enter numeric values for quantity and price.")
-    database.insert_ingredient(name, date, quantity, unit, price)
+    database.insert_ingredient(name.strip().lower(), date, quantity, unit.strip().upper(), price)
 
 def use_ingredient():
-    name = input("Enter ingredient name: ")
-    check = database.check_ingredient(name)
+    name = input("\nEnter ingredient name: ")
+    check = database.check_ingredient(name.strip().lower())
     if check is None:
         print("Ingredient not found!")
-        return    
+        return
     while True:
         try:
             quantity = float(input("Enter quantity used: "))
+            available = check[2]
+            if quantity > available:
+                print("\nIngredients not enough!!\n")
+                continue
             break
         except ValueError:
             print("Invalid input. Please enter numeric values for quantity")
-    updated = database.update_ingredient(quantity, name)
+    updated = database.update_ingredient(quantity, name.strip().lower())
     if updated == 0:
-        print("Nothing has changed.")
+        print("\nNothing has changed.")
     else:
-        print("List updated!")
+        print("\nList updated!")
 
 while True:
     print("\n1. Add Ingredient")
