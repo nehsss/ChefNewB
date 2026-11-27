@@ -18,3 +18,10 @@ def fetch_ingredients():
 def update_ingredient(quantity, name):
     cur.execute("UPDATE ingredients SET quantity = quantity - ? WHERE name = ?", (quantity, name))
     con.commit()
+    updated_rows = cur.rowcount
+    return updated_rows
+
+def check_ingredient(name):
+    cur.execute("SELECT * FROM ingredients WHERE name = ?", (name,))
+    check = cur.fetchone()
+    return check

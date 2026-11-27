@@ -17,14 +17,23 @@ def add_ingredient():
     database.insert_ingredient(name, date, quantity, unit, price)
 
 def use_ingredient():
+    name = input("Enter ingredient name: ")
+    check = database.check_ingredient(name)
+    if check is None:
+        print("Ingredient not found!")
+        return    
     while True:
         try:
-            name = input("Enter ingredient name: ")
             quantity = float(input("Enter quantity used: "))
             break
         except ValueError:
             print("Invalid input. Please enter numeric values for quantity")
-    database.update_ingredient(quantity, name)
+    updated = database.update_ingredient(quantity, name)
+    if updated == 0:
+        print("Nothing has changed.")
+    else:
+        print("List updated!")
+
 while True:
     print("\n1. Add Ingredient")
     print("2. View Ingredients")
